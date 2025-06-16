@@ -113,16 +113,36 @@ Evoluce úspěšně vytvořila program schopný navigovat po trail a sbírat jí
 
 **Problém:** Flappy Bird  
 **Nástroj:** NEAT (NeuroEvolution of Augmenting Topologies)  
-**Cíl:** Naučit neurální síť hrát Flappy Bird
+**Cíl:** Naučit neurální síť hrát Flappy Bird s evolučním přístupem
+
+### Popis problému:
+- Implementace hry Flappy Bird v Pygame
+- Ptáci musí navigovat skrze překážky (trubky) s mezerou 200 pixelů
+- Detekce kolizí pomocí pixel-perfect mask systému
+- Fitness založena na přežití, průletu překážkami a pozici vůči středu mezery
 
 ### Parametry NEAT:
-- Populace: variabilní (evolučně se mění)
-- Fitness: počet překonaných překážek
-- Vstupy: pozice ptáka, pozice a vzdálenost k překážkám
-- Výstup: skok/neskok
+- **Populace:** 100 jedinců
+- **Fitness kritérium:** maximalizace (threshold 200)
+- **Topologie:** feed-forward sítě s evolucí struktury
+- **Speciace:** compatibility threshold 3.2, max stagnation 30 generací
+- **Reprodukce:** elitismus 3, survival threshold 25%
+
+### Architektura neuronové sítě:
+- **Vstupy (9):** normalizované pozice a rychlosti ptáka, vzdálenosti k aktuální a následující trubce
+- **Výstup (1):** rozhodnutí o skoku (threshold 0.5)
+- **Aktivační funkce:** tanh, sigmoid, relu (s mutací)
+- **Evoluce struktury:** přidávání/odebírání uzlů a spojení
+
+### Fitness funkce:
+- **Základní přežití:** +0.01 za frame
+- **Průlet trubkou:** +1.5 bodů
+- **Pozice ve středu mezery:** bonus až +0.05
+- **Penalizace:** -5 za kolizi, -3 za výlet z obrazovky, -0.002 za skok
+
 
 ### Výsledky:
-Úspešné natrénování AI, která dokáže hrát Flappy Bird a překonávat překážky.
+Úspěšné natrénování AI agentů schopných dosáhnout skóre 100+ překážek. Nejlepší jedinci dokázali konzistentně navigovat mezi trubkami s přesnou kontrolou výšky letu.
 
 [Záznam hry](05/recording-20250613-003842.mp4)
 
